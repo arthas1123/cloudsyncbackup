@@ -1,0 +1,3 @@
+/Users/alex11/cloudsyncbackup/build/CMakeFiles/cloudsyncbackup.dir
+/Users/alex11/cloudsyncbackup/build/CMakeFiles/edit_cache.dir
+/Users/alex11/cloudsyncbackup/build/CMakeFiles/rebuild_cache.dir

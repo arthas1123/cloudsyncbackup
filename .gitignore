@@ -1,0 +1,20 @@
+# 編譯產生的中間檔
+/build/
+/CMakeFiles/
+/Makefile
+cmake_install.cmake
+CMakeCache.txt
+
+# 可執行檔
+/cloudsyncbackup
+/cloudsyncbackup.exe
+
+# 資料庫檔案
+mydata.db
+backup_storage/
+
+# 日誌資料夾
+logs/
+
+# macOS metadata
+.DS_Store

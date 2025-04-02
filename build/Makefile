@@ -129,6 +129,30 @@ cloudsyncbackup/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/build
 .PHONY : cloudsyncbackup/fast
 
+src/backup.o: src/backup.cpp.o
+.PHONY : src/backup.o
+
+# target to build an object file
+src/backup.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o
+.PHONY : src/backup.cpp.o
+
+src/backup.i: src/backup.cpp.i
+.PHONY : src/backup.i
+
+# target to preprocess a source file
+src/backup.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.i
+.PHONY : src/backup.cpp.i
+
+src/backup.s: src/backup.cpp.s
+.PHONY : src/backup.s
+
+# target to generate assembly for a file
+src/backup.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.s
+.PHONY : src/backup.cpp.s
+
 src/database.o: src/database.cpp.o
 .PHONY : src/database.o
 
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... cloudsyncbackup"
+	@echo "... src/backup.o"
+	@echo "... src/backup.i"
+	@echo "... src/backup.s"
 	@echo "... src/database.o"
 	@echo "... src/database.i"
 	@echo "... src/database.s"

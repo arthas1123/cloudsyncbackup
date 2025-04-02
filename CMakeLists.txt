@@ -8,6 +8,7 @@ include_directories(include)
 add_executable(cloudsyncbackup
     src/main.cpp
     src/database.cpp
+    src/backup.cpp
 )
 
 target_link_libraries(cloudsyncbackup sqlite3)

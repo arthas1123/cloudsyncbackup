@@ -9,8 +9,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/alex11/cloudsyncbackup/src/backup.cpp" "CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o.d"
+  "/Users/alex11/cloudsyncbackup/src/cli_parser.cpp" "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/database.cpp" "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/main.cpp" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o.d"
+  "/Users/alex11/cloudsyncbackup/src/restore.cpp" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

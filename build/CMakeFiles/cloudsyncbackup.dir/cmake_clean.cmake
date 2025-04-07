@@ -1,10 +1,14 @@
 file(REMOVE_RECURSE
   "CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o.d"
+  "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o"
+  "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o.d"
+  "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o"
+  "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d"
   "cloudsyncbackup"
   "cloudsyncbackup.pdb"
 )

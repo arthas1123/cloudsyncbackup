@@ -1,24 +1,15 @@
 #include <iostream>
 #include <filesystem>
-#include "database.hpp"
-#include "backup.hpp"
+#include "cli_parser.hpp"
 
 namespace fs = std::filesystem;
 
-int main()
+int main(int argc, char *argv[])
 {
 
     fs::path basePath = ".."; // 回到根目錄
     fs::path dbPath = basePath / "mydata.db";
     fs::path backupDir = basePath / "backup_storage";
-
-    std::cout << "🚀 cloudsyncbackup 啟動中...\n";
-
-    Database db(dbPath.string());
-    db.initialize();
-    db.insertTestData();
-
-    Backup::run(dbPath.string(), backupDir.string());
-
+    CLIParser::handle(argc, argv, dbPath.string(), backupDir.string());
     return 0;
 }

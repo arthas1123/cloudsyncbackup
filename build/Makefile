@@ -153,6 +153,30 @@ src/backup.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.s
 .PHONY : src/backup.cpp.s
 
+src/cli_parser.o: src/cli_parser.cpp.o
+.PHONY : src/cli_parser.o
+
+# target to build an object file
+src/cli_parser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o
+.PHONY : src/cli_parser.cpp.o
+
+src/cli_parser.i: src/cli_parser.cpp.i
+.PHONY : src/cli_parser.i
+
+# target to preprocess a source file
+src/cli_parser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.i
+.PHONY : src/cli_parser.cpp.i
+
+src/cli_parser.s: src/cli_parser.cpp.s
+.PHONY : src/cli_parser.s
+
+# target to generate assembly for a file
+src/cli_parser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.s
+.PHONY : src/cli_parser.cpp.s
+
 src/database.o: src/database.cpp.o
 .PHONY : src/database.o
 
@@ -201,6 +225,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/restore.o: src/restore.cpp.o
+.PHONY : src/restore.o
+
+# target to build an object file
+src/restore.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o
+.PHONY : src/restore.cpp.o
+
+src/restore.i: src/restore.cpp.i
+.PHONY : src/restore.i
+
+# target to preprocess a source file
+src/restore.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.i
+.PHONY : src/restore.cpp.i
+
+src/restore.s: src/restore.cpp.s
+.PHONY : src/restore.s
+
+# target to generate assembly for a file
+src/restore.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.s
+.PHONY : src/restore.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -213,12 +261,18 @@ help:
 	@echo "... src/backup.o"
 	@echo "... src/backup.i"
 	@echo "... src/backup.s"
+	@echo "... src/cli_parser.o"
+	@echo "... src/cli_parser.i"
+	@echo "... src/cli_parser.s"
 	@echo "... src/database.o"
 	@echo "... src/database.i"
 	@echo "... src/database.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/restore.o"
+	@echo "... src/restore.i"
+	@echo "... src/restore.s"
 .PHONY : help
 
 

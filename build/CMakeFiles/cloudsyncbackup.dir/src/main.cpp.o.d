@@ -975,6 +975,4 @@ CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
-  /Users/alex11/cloudsyncbackup/include/database.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sqlite3.h \
-  /Users/alex11/cloudsyncbackup/include/backup.hpp
+  /Users/alex11/cloudsyncbackup/include/cli_parser.hpp

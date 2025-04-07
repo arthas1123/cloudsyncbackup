@@ -114,11 +114,41 @@ CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alex11/cloudsyncbackup/src/backup.cpp -o CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.s
 
+CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o: CMakeFiles/cloudsyncbackup.dir/flags.make
+CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o: /Users/alex11/cloudsyncbackup/src/restore.cpp
+CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o: CMakeFiles/cloudsyncbackup.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/alex11/cloudsyncbackup/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o -MF CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d -o CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o -c /Users/alex11/cloudsyncbackup/src/restore.cpp
+
+CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alex11/cloudsyncbackup/src/restore.cpp > CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.i
+
+CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alex11/cloudsyncbackup/src/restore.cpp -o CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.s
+
+CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o: CMakeFiles/cloudsyncbackup.dir/flags.make
+CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o: /Users/alex11/cloudsyncbackup/src/cli_parser.cpp
+CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o: CMakeFiles/cloudsyncbackup.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/alex11/cloudsyncbackup/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o -MF CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o.d -o CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o -c /Users/alex11/cloudsyncbackup/src/cli_parser.cpp
+
+CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alex11/cloudsyncbackup/src/cli_parser.cpp > CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.i
+
+CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alex11/cloudsyncbackup/src/cli_parser.cpp -o CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.s
+
 # Object files for target cloudsyncbackup
 cloudsyncbackup_OBJECTS = \
 "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o" \
 "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o" \
-"CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o"
+"CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o" \
+"CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o" \
+"CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o"
 
 # External object files for target cloudsyncbackup
 cloudsyncbackup_EXTERNAL_OBJECTS =
@@ -126,9 +156,11 @@ cloudsyncbackup_EXTERNAL_OBJECTS =
 cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o
 cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o
 cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/src/backup.cpp.o
+cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o
+cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o
 cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/build.make
 cloudsyncbackup: CMakeFiles/cloudsyncbackup.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/alex11/cloudsyncbackup/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable cloudsyncbackup"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/alex11/cloudsyncbackup/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable cloudsyncbackup"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cloudsyncbackup.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

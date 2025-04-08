@@ -72,3 +72,34 @@ std::vector<std::pair<int, std::string>> Database::getAllNotes()
     sqlite3_finalize(stmt);
     return result;
 }
+
+bool Database::updateNote(int id, const std::string &newContent)
+{
+    std::string sql = "UPDATE notes SET content = ? WHERE id = ?;";
+    sqlite3_stmt *stmt = nullptr;
+    if (sqlite3_prepare_v2((sqlite3 *)db_, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "❌ 更新筆記失敗：" << sqlite3_errmsg((sqlite3 *)db_) << std::endl;
+        return false;
+    }
+    sqlite3_bind_text(stmt, 1, newContent.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(stmt, 2, id);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return success;
+}
+
+bool Database::deleteNote(int id)
+{
+    std::string sql = "DELETE FROM notes WHERE id = ?;";
+    sqlite3_stmt *stmt = nullptr;
+    if (sqlite3_prepare_v2((sqlite3 *)db_, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "❌ 刪除筆記失敗：" << sqlite3_errmsg((sqlite3 *)db_) << std::endl;
+        return false;
+    }
+    sqlite3_bind_int(stmt, 1, id);
+    bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return success;
+}

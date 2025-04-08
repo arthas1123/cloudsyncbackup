@@ -1975,6 +1975,7 @@ CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o: /Users/alex11/cloudsyncback
   /Users/alex11/cloudsyncbackup/include/backup.hpp \
   /Users/alex11/cloudsyncbackup/include/cli_parser.hpp \
   /Users/alex11/cloudsyncbackup/include/database.hpp \
+  /Users/alex11/cloudsyncbackup/include/emoji.hpp \
   /Users/alex11/cloudsyncbackup/include/restore.hpp
 
 CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o: /Users/alex11/cloudsyncbackup/src/database.cpp \
@@ -4897,6 +4898,8 @@ CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o: /Users/alex11/cloudsyncbackup/
 /Users/alex11/cloudsyncbackup/src/restore.cpp:
 
 /Users/alex11/cloudsyncbackup/include/restore.hpp:
+
+/Users/alex11/cloudsyncbackup/include/emoji.hpp:
 
 /Users/alex11/cloudsyncbackup/include/database.hpp:
 

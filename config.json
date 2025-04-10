@@ -1,0 +1,13 @@
+{
+    "db_path": "mydata.db",
+    "backup_dir": "backup_storage",
+    "log_dir": "logs",
+    "enable_emoji": true,
+    "enable_logging": true,
+    "cloud": {
+      "enabled": false,
+      "provider": "dropbox",
+      "api_key": "",
+      "sync_on_backup": false
+    }
+  }

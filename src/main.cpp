@@ -1,15 +1,44 @@
 #include <iostream>
 #include <filesystem>
-#include "cli_parser.hpp"
+#include "config.hpp"
+#include "logger.hpp"
+#include "emoji.hpp"
+#include "database.hpp"
+#include "backup.hpp"
 
 namespace fs = std::filesystem;
 
-int main(int argc, char *argv[])
+int main()
 {
+    std::string configPath = "config.json";
+    AppConfig config = ConfigLoader::loadConfig(configPath);
 
-    fs::path basePath = ".."; // 回到根目錄
-    fs::path dbPath = basePath / "mydata.db";
-    fs::path backupDir = basePath / "backup_storage";
-    CLIParser::handle(argc, argv, dbPath.string(), backupDir.string());
+    // emoji 控制
+    if (!config.enableEmoji)
+    {
+        Emoji::enabled = false;
+    }
+
+    // log 控制
+    if (config.enableLogging)
+    {
+        Logger::init(config.logDir);
+        Logger::info("cloudsyncbackup 啟動");
+    }
+
+    std::cout << Emoji::Rocket() << " cloudsyncbackup 啟動中...\n";
+
+    // 處理路徑
+    fs::path dbPath = config.dbPath;
+    fs::path backupDir = config.backupDir;
+
+    // 初始化資料庫
+    Database db(dbPath.string());
+    db.initialize();
+    db.insertNote("5566"); // 之後可以改掉，這只是測試
+
+    // 執行備份
+    Backup::run(dbPath.string(), backupDir.string());
+
     return 0;
 }

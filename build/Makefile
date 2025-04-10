@@ -177,6 +177,30 @@ src/cli_parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.s
 .PHONY : src/cli_parser.cpp.s
 
+src/config.o: src/config.cpp.o
+.PHONY : src/config.o
+
+# target to build an object file
+src/config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/config.cpp.o
+.PHONY : src/config.cpp.o
+
+src/config.i: src/config.cpp.i
+.PHONY : src/config.i
+
+# target to preprocess a source file
+src/config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/config.cpp.i
+.PHONY : src/config.cpp.i
+
+src/config.s: src/config.cpp.s
+.PHONY : src/config.s
+
+# target to generate assembly for a file
+src/config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/config.cpp.s
+.PHONY : src/config.cpp.s
+
 src/database.o: src/database.cpp.o
 .PHONY : src/database.o
 
@@ -200,6 +224,30 @@ src/database.s: src/database.cpp.s
 src/database.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/database.cpp.s
 .PHONY : src/database.cpp.s
+
+src/logger.o: src/logger.cpp.o
+.PHONY : src/logger.o
+
+# target to build an object file
+src/logger.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o
+.PHONY : src/logger.cpp.o
+
+src/logger.i: src/logger.cpp.i
+.PHONY : src/logger.i
+
+# target to preprocess a source file
+src/logger.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.i
+.PHONY : src/logger.cpp.i
+
+src/logger.s: src/logger.cpp.s
+.PHONY : src/logger.s
+
+# target to generate assembly for a file
+src/logger.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.s
+.PHONY : src/logger.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -264,9 +312,15 @@ help:
 	@echo "... src/cli_parser.o"
 	@echo "... src/cli_parser.i"
 	@echo "... src/cli_parser.s"
+	@echo "... src/config.o"
+	@echo "... src/config.i"
+	@echo "... src/config.s"
 	@echo "... src/database.o"
 	@echo "... src/database.i"
 	@echo "... src/database.s"
+	@echo "... src/logger.o"
+	@echo "... src/logger.i"
+	@echo "... src/logger.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

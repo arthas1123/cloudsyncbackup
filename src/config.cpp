@@ -38,3 +38,23 @@ AppConfig ConfigLoader::loadConfig(const std::string &configPath)
 
     return config;
 }
+
+void ConfigLoader::saveConfig(const std::string &configPath, const AppConfig &config)
+{
+    json j;
+
+    j["db_path"] = config.dbPath;
+    j["backup_dir"] = config.backupDir;
+    j["log_dir"] = config.logDir;
+    j["enable_emoji"] = config.enableEmoji;
+    j["enable_logging"] = config.enableLogging;
+
+    j["cloud"] = {
+        {"enabled", config.cloud.enabled},
+        {"provider", config.cloud.provider},
+        {"api_key", config.cloud.apiKey},
+        {"sync_on_backup", config.cloud.syncOnBackup}};
+
+    std::ofstream out(configPath);
+    out << std::setw(4) << j << std::endl; // 美化輸出（4格縮排）
+}

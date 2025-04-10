@@ -11,6 +11,8 @@ add_executable(cloudsyncbackup
     src/backup.cpp
     src/restore.cpp
     src/cli_parser.cpp
+    src/config.cpp
+    src/logger.cpp
 )
 
 target_link_libraries(cloudsyncbackup sqlite3)

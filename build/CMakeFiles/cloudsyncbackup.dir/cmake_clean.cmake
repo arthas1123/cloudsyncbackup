@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d"
+  "CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.o"
+  "CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.o.d"
   "cloudsyncbackup"
   "cloudsyncbackup.pdb"
 )

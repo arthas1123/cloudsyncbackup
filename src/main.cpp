@@ -36,9 +36,16 @@ int main()
     Database db(dbPath.string());
     db.initialize();
     db.insertNote("5566"); // 之後可以改掉，這只是測試
+    db.insertNote("1234"); // 之後可以改掉，這只是測試
 
     // 執行備份
-    Backup::run(dbPath.string(), backupDir.string());
-
+    if (Backup::shouldBackup(dbPath.string(), 5)) // 單位：秒
+    {
+        Backup::run(dbPath.string(), backupDir.string());
+    }
+    else
+    {
+        std::cout << "🛑 無需備份：距離上次修改時間過短。\n";
+    }
     return 0;
 }

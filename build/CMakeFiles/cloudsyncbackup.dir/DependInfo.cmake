@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/alex11/cloudsyncbackup/src/logger.cpp" "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/main.cpp" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/restore.cpp" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d"
+  "/Users/alex11/cloudsyncbackup/src/threading/backup_worker.cpp" "CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

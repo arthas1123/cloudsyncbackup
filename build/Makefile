@@ -297,6 +297,30 @@ src/restore.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.s
 .PHONY : src/restore.cpp.s
 
+src/threading/backup_worker.o: src/threading/backup_worker.cpp.o
+.PHONY : src/threading/backup_worker.o
+
+# target to build an object file
+src/threading/backup_worker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.o
+.PHONY : src/threading/backup_worker.cpp.o
+
+src/threading/backup_worker.i: src/threading/backup_worker.cpp.i
+.PHONY : src/threading/backup_worker.i
+
+# target to preprocess a source file
+src/threading/backup_worker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.i
+.PHONY : src/threading/backup_worker.cpp.i
+
+src/threading/backup_worker.s: src/threading/backup_worker.cpp.s
+.PHONY : src/threading/backup_worker.s
+
+# target to generate assembly for a file
+src/threading/backup_worker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/threading/backup_worker.cpp.s
+.PHONY : src/threading/backup_worker.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -327,6 +351,9 @@ help:
 	@echo "... src/restore.o"
 	@echo "... src/restore.i"
 	@echo "... src/restore.s"
+	@echo "... src/threading/backup_worker.o"
+	@echo "... src/threading/backup_worker.i"
+	@echo "... src/threading/backup_worker.s"
 .PHONY : help
 
 

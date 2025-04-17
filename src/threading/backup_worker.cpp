@@ -2,8 +2,8 @@
 #include <iostream>
 #include "backup.hpp"
 
-BackupWorker::BackupWorker(TaskQueue<std::string> &taskQueue)
-    : taskQueue_(taskQueue), running_(false) {}
+BackupWorker::BackupWorker(TaskQueue<std::string> &taskQueue, const std::string backupDir)
+    : taskQueue_(taskQueue), backupDir_(backupDir), running_(false) {}
 
 BackupWorker::~BackupWorker()
 {
@@ -19,6 +19,7 @@ void BackupWorker::start()
 void BackupWorker::stop()
 {
     running_ = false;
+    taskQueue_.push(EXIT_TASK); // 發送退出訊號
     if (thread_.joinable())
     {
         thread_.join();
@@ -29,13 +30,20 @@ void BackupWorker::run()
 {
     while (running_)
     {
-        std::string file = taskQueue_.pop();
-        if (!file.empty())
+        std::string task = taskQueue_.pop();
+
+        if (task == EXIT_TASK)
         {
-            std::cout << "📦 處理備份任務：" << file << std::endl;
+            std::cout << "🔴 停止備份工作者..." << std::endl;
+            break; // 停止執行緒
+        }
+
+        if (!task.empty())
+        {
+            std::cout << "📦 處理備份任務：" << task << std::endl;
             // TODO: 在這裡呼叫 Backup::run(...) 或你自己的備份邏輯
-            // Backup::run(file, "backup_storage"); // 假設備份到 backup_storage 資料夾
-            printf("備份到 %s\n", file.c_str());
+            Backup::run(task, backupDir_); // 假設備份到 backup_storage 資料夾
+            std::cout << "✅ 備份完成：" << task << " to " << backupDir_ << std::endl;
         }
     }
 }

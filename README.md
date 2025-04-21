@@ -95,3 +95,12 @@ cmake --build .
 	•	Log module (write to logs/)
 	•	config.json for paths & options
 	•	Unit testing & packaging
+
+
+🧠 Note: Currently, logToDatabase() and getBackupCount() reside in backup.cpp for integration testing.  
+They will be moved into the Database class upon future refactor.
+
+
+## 🧾 Legacy Code
+
+The early-stage SQLite test table `notes` and related C++ demo are preserved under `/legacy` for reference and learning history.

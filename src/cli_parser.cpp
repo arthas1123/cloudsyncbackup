@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <algorithm>
 #include "emoji.hpp"
+#include "config.hpp"
 
 namespace fs = std::filesystem;
 
@@ -84,79 +85,93 @@ void CLIParser::handle(int argc, char *argv[],
             std::cerr << Emoji::Error() << " 找不到檔案：" << fileToDelete << std::endl;
         }
     }
-    else if (command == "--add-note")
-    {
-        if (argc < 3)
+    /*     else if (command == "--add-note")
         {
-            std::cerr << Emoji::Warning() << " 請提供備註內容\n";
-            return;
-        }
-        std::string noteContent = argv[2];
-        Database db(dbPath);
-        db.initialize();
-        if (db.insertNote(noteContent))
+            if (argc < 3)
+            {
+                std::cerr << Emoji::Warning() << " 請提供備註內容\n";
+                return;
+            }
+            std::string noteContent = argv[2];
+            Database db(dbPath);
+            db.initialize();
+            if (db.insertNote(noteContent))
+            {
+                std::cout << Emoji::Check() << " 已新增備註：" << noteContent << std::endl;
+            }
+            else
+            {
+                std::cerr << Emoji::Error() << " 新增備註失敗\n";
+            }
+        } */
+    /*     else if (command == "--list-notes")
         {
-            std::cout << Emoji::Check() << " 已新增備註：" << noteContent << std::endl;
-        }
-        else
-        {
-            std::cerr << Emoji::Error() << " 新增備註失敗\n";
-        }
-    }
-    else if (command == "--list-notes")
-    {
-        Database db(dbPath);
-        db.initialize();
-        auto notes = db.getAllNotes();
-        for (const auto &note : notes)
-        {
-            std::cout << Emoji::Note() << " ID: " << note.first << ", 內容: " << note.second << std::endl;
-        }
-    }
+            Database db(dbPath);
+            db.initialize();
+            auto notes = db.getAllNotes();
+            for (const auto &note : notes)
+            {
+                std::cout << Emoji::Note() << " ID: " << note.first << ", 內容: " << note.second << std::endl;
+            }
+        } */
 
-    else if (command == "--update-note")
-    {
-        if (argc < 4)
+    /*     else if (command == "--update-note")
         {
-            std::cerr << Emoji::Warning() << " 請提供備註 ID 和新內容\n";
-            return;
-        }
-        int noteId = std::stoi(argv[2]);
-        std::string newContent = argv[3];
-        Database db(dbPath);
-        db.initialize();
-        if (db.updateNote(noteId, newContent))
+            if (argc < 4)
+            {
+                std::cerr << Emoji::Warning() << " 請提供備註 ID 和新內容\n";
+                return;
+            }
+            int noteId = std::stoi(argv[2]);
+            std::string newContent = argv[3];
+            Database db(dbPath);
+            db.initialize();
+            if (db.updateNote(noteId, newContent))
+            {
+                std::cout << Emoji::Check() << " 已更新備註 ID: " << noteId << "，新內容: " << newContent << std::endl;
+            }
+            else
+            {
+                std::cerr << Emoji::Error() << " 更新備註失敗\n";
+            }
+        } */
+    /*     else if (command == "--delete-note")
         {
-            std::cout << Emoji::Check() << " 已更新備註 ID: " << noteId << "，新內容: " << newContent << std::endl;
-        }
-        else
-        {
-            std::cerr << Emoji::Error() << " 更新備註失敗\n";
-        }
-    }
-    else if (command == "--delete-note")
-    {
-        if (argc < 3)
-        {
-            std::cerr << Emoji::Warning() << " 請提供備註 ID\n";
-            return;
-        }
-        int noteId = std::stoi(argv[2]);
-        Database db(dbPath);
-        db.initialize();
-        if (db.deleteNote(noteId))
-        {
-            std::cout << Emoji::Trash() << " 已刪除備註 ID: " << noteId << std::endl;
-        }
-        else
-        {
-            std::cerr << Emoji::Error() << " 刪除備註失敗\n";
-        }
-    }
+            if (argc < 3)
+            {
+                std::cerr << Emoji::Warning() << " 請提供備註 ID\n";
+                return;
+            }
+            int noteId = std::stoi(argv[2]);
+            Database db(dbPath);
+            db.initialize();
+            if (db.deleteNote(noteId))
+            {
+                std::cout << Emoji::Trash() << " 已刪除備註 ID: " << noteId << std::endl;
+            }
+            else
+            {
+                std::cerr << Emoji::Error() << " 刪除備註失敗\n";
+            }
+        } */
     else if (command == "--help")
     {
         handle(1, nullptr, dbPath, backupDir);
     }
+    else if (command == "--log")
+    {
+        std::string configPath = "config.json";
+        AppConfig config = ConfigLoader::loadConfig(configPath);
+        Database db(config.dbPath);
+        db.getAllBackupLogs();
+    }
+    else if (command == "--show-backup-log")
+    {
+        Database db("backup_log.db");
+        db.initialize();
+        db.getAllBackupLogs();
+    }
+
     else
     {
         std::cerr << Emoji::Question() << " 未知指令：" << command << "\n";

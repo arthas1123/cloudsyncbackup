@@ -28,7 +28,7 @@ void BackupWorker::stop()
 
 void BackupWorker::run()
 {
-    while (running_)
+    while (true)
     {
         std::string task = taskQueue_.pop();
 

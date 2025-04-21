@@ -15,6 +15,7 @@ backup_storage/
 
 # 日誌資料夾
 logs/
+*.log
 
 # macOS metadata
 .DS_Store

@@ -1,7 +1,16 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <utility> // for std::pair
+
+struct BackupRecord
+{
+    int id;
+    std::string filePath;
+    std::string backupPath;
+    std::string timestamp;
+    std::string status;
+    std::string errorMsg;
+};
 
 class Database
 {
@@ -10,10 +19,16 @@ public:
     ~Database();
 
     void initialize();
-    bool insertNote(const std::string &content);
-    std::vector<std::pair<int, std::string>> getAllNotes();
-    bool updateNote(int id, const std::string &newContent);
-    bool deleteNote(int id);
+    bool logBackUp(const std::string &filePath,
+                   const std::string &backupPath,
+                   const std::string &timeStamp,
+                   const std::string &status,
+                   const std::string &errorMsg = "");
+    bool getBackUpLog(int id, BackupRecord &record);
+    int getBackUpLogCount();
+    // bool updateBackUpLog(int id, const std::string &newContent);
+    bool deleteBackLog(int id);
+    void getAllBackupLogs();
 
 private:
     std::string dbPath_;

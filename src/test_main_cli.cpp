@@ -9,7 +9,7 @@
 
 namespace fs = std::filesystem;
 
-int main()
+int main(int argc, char *argv[])
 {
     std::string configPath = "config.json";
     AppConfig config = ConfigLoader::loadConfig(configPath);
@@ -34,28 +34,8 @@ int main()
     fs::path backupDir = config.backupDir;
 
     // 初始化資料庫
-    Database db(dbPath.string());
+    Database db("backup_log.db");
     db.initialize();
-
-    // 執行備份
-    if (Backup::shouldBackup(dbPath.string(), 5)) // 單位：秒
-    {
-        bool result = Backup::run(dbPath.string(), backupDir.string());
-        if (result)
-        {
-            std::cout << Emoji::Check() << " 備份成功！\n"
-                      << " 備份檔案：" << Backup::getLastBackupFilename() << "\n";
-        }
-        else
-        {
-            std::cerr << Emoji::Error() << " 備份失敗！\n"
-                      << " 錯誤訊息：" << Backup::getLastError() << "\n";
-        }
-        std::cout << Emoji::Menu() << " 已備份版本數量：" << Backup::getBackupCount() << "\n";
-    }
-    else
-    {
-        std::cout << Emoji::Error() << " 略過備份（最近 5 秒內無變動）\n";
-    }
+    CLIParser::handle(argc, argv, dbPath.string(), backupDir.string());
     return 0;
 }

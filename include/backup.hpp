@@ -19,6 +19,13 @@ public:
     static std::string getLastBackupFilename();
     static BackupStatus getLastStatus();
     static std::string getLastError();
+    static size_t getBackupCount();
+    static bool logToDatabase(const std::string &dbFile,
+                              const std::string &filePath,
+                              const std::string &backupPath,
+                              const std::string &isoTime,
+                              const std::string &status,
+                              const std::string &errorMsg = "");
 
 private:
     // 狀態追蹤

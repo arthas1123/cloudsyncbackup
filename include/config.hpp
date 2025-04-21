@@ -15,7 +15,7 @@ struct AppConfig
         std::string provider;
         std::string apiKey;
         bool syncOnBackup = false;
-    } cloud; // ✅ 注意這個分號跟變數名稱
+    } cloud;
 };
 
 class ConfigLoader

@@ -26,14 +26,34 @@ Database::~Database()
 
 void Database::initialize()
 {
-    const char *sql = "CREATE TABLE IF NOT EXISTS notes ("
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                      "content TEXT NOT NULL);";
-    char *errMsg = nullptr;
-    if (sqlite3_exec((sqlite3 *)db_, sql, nullptr, nullptr, &errMsg) != SQLITE_OK)
+    // const char *sql = "CREATE TABLE IF NOT EXISTS notes ("
+    //                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+    //                   "content TEXT NOT NULL);";
+
+    // char *errMsg = nullptr;
+    // if (sqlite3_exec((sqlite3 *)db_, sql, nullptr, nullptr, &errMsg) != SQLITE_OK)
+    // {
+    //     std::cerr << "❌ 建立資料表失敗：" << errMsg << std::endl;
+    //     sqlite3_free(errMsg);
+    // }
+
+    const char *logTableSql = "CREATE TABLE IF NOT EXISTS backup_log ("
+                              "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                              "file_path TEXT NOT NULL, "
+                              "backup_path TEXT NOT NULL, "
+                              "backup_time TEXT NOT NULL, "
+                              "status TEXT NOT NULL, "
+                              "error_message TEXT);";
+
+    char *logErr = nullptr;
+    if (sqlite3_exec((sqlite3 *)db_, logTableSql, nullptr, nullptr, &logErr) != SQLITE_OK)
     {
-        std::cerr << "❌ 建立資料表失敗：" << errMsg << std::endl;
-        sqlite3_free(errMsg);
+        std::cerr << "❌ 建立 backup_log 資料表失敗：" << logErr << std::endl;
+        sqlite3_free(logErr);
+    }
+    else
+    {
+        std::cout << "📦 資料表初始化成功\n";
     }
 }
 
@@ -102,4 +122,39 @@ bool Database::deleteNote(int id)
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
     sqlite3_finalize(stmt);
     return success;
+}
+
+// 獲取所有備份紀錄
+// 備份用的表：保留並繼續維護
+void Database::getAllBackupLogs()
+{
+    const char *sql = "SELECT id, file_path, backup_path, backup_time, status, error_message FROM backup_log ORDER BY id DESC;";
+    sqlite3_stmt *stmt = nullptr;
+
+    if (sqlite3_prepare_v2((sqlite3 *)db_, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "❌ 無法查詢備份紀錄：" << sqlite3_errmsg((sqlite3 *)db_) << std::endl;
+        return;
+    }
+
+    std::cout << "\n📋 備份紀錄列表：\n";
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const char *file = (const char *)sqlite3_column_text(stmt, 1);
+        const char *backup = (const char *)sqlite3_column_text(stmt, 2);
+        const char *time = (const char *)sqlite3_column_text(stmt, 3);
+        const char *status = (const char *)sqlite3_column_text(stmt, 4);
+        const char *error = (const char *)sqlite3_column_text(stmt, 5);
+
+        std::cout << "🔹 ID: " << id
+                  << "\n    檔案：" << file
+                  << "\n    備份：" << backup
+                  << "\n    時間：" << time
+                  << "\n    狀態：" << status
+                  << "\n    錯誤：" << (error ? error : "無")
+                  << "\n\n";
+    }
+
+    sqlite3_finalize(stmt);
 }

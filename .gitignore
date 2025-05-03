@@ -19,3 +19,7 @@ logs/
 
 # macOS metadata
 .DS_Store
+
+# ignore test files
+
+test_*

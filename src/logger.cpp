@@ -1,4 +1,5 @@
 #include "logger.hpp"
+#include "event_bus.hpp"
 #include <fstream>
 #include <ctime>
 #include <filesystem>
@@ -29,4 +30,15 @@ void Logger::error(const std::string &msg)
 {
     time_t now = time(nullptr);
     logFile << "[ERR ] " << std::ctime(&now) << "  " << msg << std::endl;
+}
+
+void Logger::subscribeToBackupEvent(EventBus &bus)
+{
+    bus.subscribe<BackupEvent>([](const std::shared_ptr<EventBase> &event)
+                               {
+                                   auto backup = std::static_pointer_cast<BackupEvent>(event);
+                                   std::string message = "[BackupEvent] file: " + backup->filePath +
+                                                         ", status: " + backup->status +
+                                                         ", message: " + backup->message;
+                                   Logger::info(message); });
 }

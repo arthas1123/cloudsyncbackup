@@ -1,49 +1,25 @@
 #include "threading/backup_worker.hpp"
 #include <iostream>
+#include <thread>
 #include "backup.hpp"
+#include "event_bus.hpp"
 
-BackupWorker::BackupWorker(TaskQueue<std::string> &taskQueue, const std::string backupDir)
-    : taskQueue_(taskQueue), backupDir_(backupDir), running_(false) {}
-
-BackupWorker::~BackupWorker()
+void BackupWorker::subscribe(EventBus &bus)
 {
-    stop();
-}
+    bus.subscribe<BackupRequestedEvent>([&bus](const std::shared_ptr<EventBase> &event)
+                                        {
+        auto backupEvent = std::static_pointer_cast<BackupRequestedEvent>(event);
+        std::cout << "📦 收到備份事件：" << backupEvent->srcPath << std::endl;
 
-void BackupWorker::start()
-{
-    running_ = true;
-    thread_ = std::thread(&BackupWorker::run, this);
-}
-
-void BackupWorker::stop()
-{
-    running_ = false;
-    taskQueue_.push(EXIT_TASK); // 發送退出訊號
-    if (thread_.joinable())
-    {
-        thread_.join();
-    }
-}
-
-void BackupWorker::run()
-{
-    while (true)
-    {
-        std::string task = taskQueue_.pop();
-
-        if (task == EXIT_TASK)
+        std::thread([=, &bus]()
         {
-            std::cout << "🔴 停止備份工作者..." << std::endl;
-            break; // 停止執行緒
-        }
+            Backup::run(backupEvent->srcPath, backupEvent->destPath);
 
-        if (!task.empty())
-        {
-            std::cout << "📦 處理備份任務：" << task << std::endl;
-            // TODO: 在這裡呼叫 Backup::run(...) 或你自己的備份邏輯
-            Backup::run(task, backupDir_); // 假設備份到 backup_storage 資料夾
-            std::cout << "✅ 備份完成：" << task << " to " << backupDir_ << std::endl;
-        }
-    }
+            auto result = std::make_shared<BackupEvent>(
+                backupEvent->srcPath,
+                backupEvent->destPath,
+                "SUCCESS",
+                "備份與上傳完成（背景執行）");
+            bus.publish(result);
+        }).detach(); });
 }

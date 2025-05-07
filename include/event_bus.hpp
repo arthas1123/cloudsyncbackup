@@ -55,3 +55,12 @@ public:
                 const std::string &stat, const std::string &msg = "")
         : filePath(file), backupPath(backup), status(stat), message(msg) {}
 };
+
+struct BackupRequestedEvent : public EventBase
+{
+    std::string srcPath;
+    std::string destPath;
+
+    BackupRequestedEvent(const std::string &s, const std::string &d)
+        : srcPath(std::move(s)), destPath(std::move(d)) {}
+};

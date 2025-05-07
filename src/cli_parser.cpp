@@ -12,7 +12,8 @@ namespace fs = std::filesystem;
 
 void CLIParser::handle(int argc, char *argv[],
                        const std::string &dbPath,
-                       const std::string &backupDir)
+                       const std::string &backupDir,
+                       EventBus &bus)
 {
     // scan if --no-icons is present
     for (int i = 1; i < argc; ++i)
@@ -46,7 +47,8 @@ void CLIParser::handle(int argc, char *argv[],
 
     if (command == "--backup")
     {
-        Backup::run(dbPath, backupDir);
+        auto req = std::make_shared<BackupRequestedEvent>(dbPath, backupDir);
+        bus.publish(req);
     }
     else if (command == "--restore")
     {

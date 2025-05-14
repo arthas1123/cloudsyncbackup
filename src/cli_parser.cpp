@@ -158,7 +158,7 @@ void CLIParser::handle(int argc, char *argv[],
         } */
     else if (command == "--help")
     {
-        handle(1, nullptr, dbPath, backupDir);
+        handle(1, nullptr, dbPath, backupDir, bus);
     }
     else if (command == "--log")
     {

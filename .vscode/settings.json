@@ -52,5 +52,6 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "condition_variable": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

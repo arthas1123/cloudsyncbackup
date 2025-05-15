@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/cloudsyncbackup.dir/src/config.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o.d"
+  "CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.o"
+  "CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o"
   "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o.d"
   "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o"

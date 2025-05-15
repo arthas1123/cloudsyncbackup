@@ -977,6 +977,9 @@ CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Users/alex11/cloudsyncbackup/include/config.hpp \
   /Users/alex11/cloudsyncbackup/include/logger.hpp \
+  /Users/alex11/cloudsyncbackup/include/event_bus.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/map \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__tree \
   /Users/alex11/cloudsyncbackup/include/emoji.hpp \
   /Users/alex11/cloudsyncbackup/include/database.hpp \
   /Users/alex11/cloudsyncbackup/include/backup.hpp \
@@ -996,4 +999,7 @@ CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__chrono/year_month_weekday.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__chrono/literals.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/forward_list \
-  /Users/alex11/cloudsyncbackup/include/cli_parser.hpp
+  /Users/alex11/cloudsyncbackup/include/cli_parser.hpp \
+  /Users/alex11/cloudsyncbackup/include/event_recorder.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/fstream \
+  /Users/alex11/cloudsyncbackup/include/threading/backup_worker.hpp

@@ -225,6 +225,30 @@ src/database.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/database.cpp.s
 .PHONY : src/database.cpp.s
 
+src/event_recorder.o: src/event_recorder.cpp.o
+.PHONY : src/event_recorder.o
+
+# target to build an object file
+src/event_recorder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.o
+.PHONY : src/event_recorder.cpp.o
+
+src/event_recorder.i: src/event_recorder.cpp.i
+.PHONY : src/event_recorder.i
+
+# target to preprocess a source file
+src/event_recorder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.i
+.PHONY : src/event_recorder.cpp.i
+
+src/event_recorder.s: src/event_recorder.cpp.s
+.PHONY : src/event_recorder.s
+
+# target to generate assembly for a file
+src/event_recorder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cloudsyncbackup.dir/build.make CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.s
+.PHONY : src/event_recorder.cpp.s
+
 src/logger.o: src/logger.cpp.o
 .PHONY : src/logger.o
 
@@ -342,6 +366,9 @@ help:
 	@echo "... src/database.o"
 	@echo "... src/database.i"
 	@echo "... src/database.s"
+	@echo "... src/event_recorder.o"
+	@echo "... src/event_recorder.i"
+	@echo "... src/event_recorder.s"
 	@echo "... src/logger.o"
 	@echo "... src/logger.i"
 	@echo "... src/logger.s"

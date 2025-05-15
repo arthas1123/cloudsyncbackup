@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/alex11/cloudsyncbackup/src/cli_parser.cpp" "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/cli_parser.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/config.cpp" "CMakeFiles/cloudsyncbackup.dir/src/config.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/config.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/database.cpp" "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/database.cpp.o.d"
+  "/Users/alex11/cloudsyncbackup/src/event_recorder.cpp" "CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/event_recorder.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/logger.cpp" "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/logger.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/main.cpp" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/main.cpp.o.d"
   "/Users/alex11/cloudsyncbackup/src/restore.cpp" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o" "gcc" "CMakeFiles/cloudsyncbackup.dir/src/restore.cpp.o.d"

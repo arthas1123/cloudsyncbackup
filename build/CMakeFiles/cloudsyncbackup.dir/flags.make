@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/alex11/cloudsyncbackup/include
 
-CXX_FLAGSarm64 = -std=gnu++17 -arch arm64
+CXX_FLAGSarm64 = -g -fsanitize=thread -std=gnu++17 -arch arm64
 
-CXX_FLAGS = -std=gnu++17 -arch arm64
+CXX_FLAGS = -g -fsanitize=thread -std=gnu++17 -arch arm64
 

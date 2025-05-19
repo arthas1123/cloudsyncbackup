@@ -1,25 +1,37 @@
 #include "event_recorder.hpp"
 #include "event_bus.hpp"
 #include <nlohmann/json.hpp>
+#include <iostream>
 
 using json = nlohmann::json;
 
-EventRecorder::EventRecorder(const std::string &filename)
+EventRecorder::EventRecorder(EventBus &bus, const std::string &filename) : logFile_(filename)
 {
-    logFile_.open(filename, std::ios::app);
     if (!logFile_.is_open())
     {
+        std::cerr << "無法開啟事件記錄檔案" << filename << std::endl;
         throw std::runtime_error("無法開啟事件記錄檔案");
     }
+
+    auto self = shared_from_this();
+    std::weak_ptr<EventRecorder> weakSelf = self;
+
+    bus.subscribe<BackupEvent>([weakSelf](const std::shared_ptr<EventBase> &event)
+                               {
+        if (auto selfLocked = weakSelf.lock()) {
+            auto backupEvent = std::static_pointer_cast<BackupEvent>(event);
+            selfLocked->recordEvent(backupEvent);
+        } });
+
+    bus.subscribe<BackupRequestedEvent>([weakSelf](const std::shared_ptr<EventBase> &event)
+                                        {
+        if (auto selfLocked = weakSelf.lock()) {
+            auto backupRequestedEvent = std::static_pointer_cast<BackupRequestedEvent>(event);
+            selfLocked->recordEvent(backupRequestedEvent);
+        } });
 }
 
-EventRecorder::~EventRecorder()
-{
-    if (logFile_.is_open())
-    {
-        logFile_.close();
-    }
-}
+EventRecorder::~EventRecorder() = default;
 
 void EventRecorder::recordEvent(const std::shared_ptr<EventBase> &event)
 {

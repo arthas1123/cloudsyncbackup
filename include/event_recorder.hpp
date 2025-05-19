@@ -5,10 +5,10 @@
 #include <mutex>
 #include "event_bus.hpp"
 
-class EventRecorder
+class EventRecorder : public std::enable_shared_from_this<EventRecorder>
 {
 public:
-    EventRecorder(const std::string &filename);
+    EventRecorder(EventBus &bus, const std::string &filename);
     ~EventRecorder();
 
     void recordEvent(const std::shared_ptr<EventBase> &event);

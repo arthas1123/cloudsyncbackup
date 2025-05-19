@@ -1,18 +1,40 @@
 #include <iostream>
 #include <filesystem>
+#include <memory>
 #include "config.hpp"
 #include "logger.hpp"
 #include "emoji.hpp"
 #include "database.hpp"
 #include "backup.hpp"
 #include "cli_parser.hpp"
+#include "event_bus.hpp"
+#include "event_recorder.hpp"
+#include "threading/backup_worker.hpp"
 
 namespace fs = std::filesystem;
 
-int main()
+int main(int argc, char *argv[])
 {
     std::string configPath = "config.json";
     AppConfig config = ConfigLoader::loadConfig(configPath);
+
+    // 初始化事件總線
+    auto bus = std::make_shared<EventBus>();
+
+    // 初始化事件記錄器
+    std::shared_ptr<EventRecorder> recorder_ptr;
+    try
+    {
+        recorder_ptr = std::make_shared<EventRecorder>(*bus, "events_log.json");
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::cerr << "初始化事件記錄器失敗：" << e.what() << std::endl;
+        return 1;
+    }
+
+    // 訂閱備份事件
+    BackupWorker::subscribe(*bus);
 
     // emoji 控制
     if (!config.enableEmoji)
@@ -37,25 +59,8 @@ int main()
     Database db(dbPath.string());
     db.initialize();
 
-    // 執行備份
-    if (Backup::shouldBackup(dbPath.string(), 5)) // 單位：秒
-    {
-        bool result = Backup::run(dbPath.string(), backupDir.string());
-        if (result)
-        {
-            std::cout << Emoji::Check() << " 備份成功！\n"
-                      << " 備份檔案：" << Backup::getLastBackupFilename() << "\n";
-        }
-        else
-        {
-            std::cerr << Emoji::Error() << " 備份失敗！\n"
-                      << " 錯誤訊息：" << Backup::getLastError() << "\n";
-        }
-        std::cout << Emoji::Menu() << " 已備份版本數量：" << Backup::getBackupCount() << "\n";
-    }
-    else
-    {
-        std::cout << Emoji::Error() << " 略過備份（最近 5 秒內無變動）\n";
-    }
+    // 使用 CLI 解析器處理命令
+    CLIParser::handle(argc, argv, dbPath.string(), backupDir.string(), *bus);
+
     return 0;
 }

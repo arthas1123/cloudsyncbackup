@@ -2,6 +2,7 @@
 #include <string>
 #include "event_bus.hpp"
 #include <memory>
+#include <mutex> // Include mutex header
 
 class Logger
 {

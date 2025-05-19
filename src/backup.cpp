@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include "database.hpp"
+#include "logger.hpp" // 確保 Logger 被包含
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -51,7 +52,7 @@ bool Backup::logToDatabase(const std::string &dbFile,
     sqlite3 *db = nullptr;
     if (sqlite3_open(dbFile.c_str(), &db) != SQLITE_OK)
     {
-        std::cerr << "❌ 無法開啟資料庫：" << dbFile << std::endl;
+        Logger::error("❌ Backup::logToDatabase: 無法開啟資料庫：" + dbFile + " - " + sqlite3_errmsg(db));
         return false;
     }
 
@@ -77,7 +78,7 @@ bool Backup::logToDatabase(const std::string &dbFile,
     sqlite3_stmt *stmt = nullptr;
     if (sqlite3_prepare_v2(db, insertSql, -1, &stmt, nullptr) != SQLITE_OK)
     {
-        std::cerr << "❌ 無法準備 SQL 語句：" << sqlite3_errmsg(db) << std::endl;
+        Logger::error("❌ Backup::logToDatabase: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(db)));
         sqlite3_close(db);
         return false;
     }
@@ -91,7 +92,7 @@ bool Backup::logToDatabase(const std::string &dbFile,
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
     if (!success)
     {
-        std::cerr << "❌ 無法執行 SQL 語句：" << sqlite3_errmsg(db) << std::endl;
+        Logger::error("❌ Backup::logToDatabase: 無法執行 SQL 語句：" + std::string(sqlite3_errmsg(db)));
         return false;
     }
     sqlite3_finalize(stmt);
@@ -134,7 +135,7 @@ bool Backup::run(const std::string &dbPath, const std::string &backupDir)
         lastError_.clear();
         backupCount_++;
 
-        std::cout << "✅ 備份成功：" << destPath << std::endl;
+        Logger::info("✅ 備份成功：" + destPath.string());
 
         db.logBackUp(dbPath, destPath.string(), nowToISO8601(), "SUCCESS", "");
         // Backup::logToDatabase("backup_log.db", dbPath, destPath.string(), nowToISO8601(), "SUCCESS", "");
@@ -144,7 +145,7 @@ bool Backup::run(const std::string &dbPath, const std::string &backupDir)
     {
         lastStatus_ = BackupStatus::FAILED;
         lastError_ = e.what();
-        std::cerr << "❌ 備份失敗：" << lastError_ << std::endl;
+        Logger::error("❌ 備份失敗：" + lastError_);
         // Backup::logToDatabase("backup_log.db", dbPath, "", nowToISO8601(), "FAILED", lastError_);
         db.logBackUp(dbPath, "", nowToISO8601(), "FAILED", lastError_);
         return false;
@@ -170,7 +171,7 @@ bool Backup::shouldBackup(const std::string &dbPath, int minIntervalSec)
     if (diff >= minIntervalSec)
         return true;
 
-    std::cout << "⏩ 略過備份（" << diff << " 秒內無變動）\n";
+    Logger::info("⏩ 略過備份（" + std::to_string(diff) + " 秒內無變動）");
     return false;
 }
 

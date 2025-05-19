@@ -1,6 +1,8 @@
 #include "database.hpp"
 #include <sqlite3.h>
+#include <sstream>
 #include <iostream>
+#include "logger.hpp"
 
 Database::Database(const std::string &dbPath)
     : dbPath_(dbPath), db_(nullptr)
@@ -53,7 +55,7 @@ void Database::initialize()
     }
     else
     {
-        std::cout << "📦 資料表初始化成功\n";
+        Logger::info("資料表初始化成功");
     }
 }
 
@@ -146,7 +148,8 @@ void Database::getAllBackupLogs()
         return;
     }
 
-    std::cout << "\n📋 備份紀錄列表：\n";
+    std::stringstream ss;
+    ss << "\n📋 備份紀錄列表：\n";
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         int id = sqlite3_column_int(stmt, 0);
@@ -155,15 +158,9 @@ void Database::getAllBackupLogs()
         const char *time = (const char *)sqlite3_column_text(stmt, 3);
         const char *status = (const char *)sqlite3_column_text(stmt, 4);
         const char *error = (const char *)sqlite3_column_text(stmt, 5);
-
-        std::cout << "🔹 ID: " << id
-                  << "\n    檔案：" << file
-                  << "\n    備份：" << backup
-                  << "\n    時間：" << time
-                  << "\n    狀態：" << status
-                  << "\n    錯誤：" << (error ? error : "無")
-                  << "\n\n";
+        ss << "🔹 ID: " << id << "\n    檔案：" << file << "\n    備份：" << backup
+           << "\n    時間：" << time << "\n    狀態：" << status << "\n    錯誤：" << (error ? error : "無") << "\n\n";
     }
-
     sqlite3_finalize(stmt);
+    Logger::info(ss.str());
 }

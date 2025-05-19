@@ -7,6 +7,7 @@
 namespace fs = std::filesystem;
 
 static std::ofstream logFile;
+static std::mutex coutMutex; // Mutex for std::cout
 
 void Logger::init(const std::string &logDir)
 {
@@ -22,12 +23,16 @@ void Logger::init(const std::string &logDir)
 
 void Logger::info(const std::string &msg)
 {
+    std::lock_guard<std::mutex> lock(coutMutex); // Acquire lock
+
     time_t now = time(nullptr);
     logFile << "[INFO] " << std::ctime(&now) << "  " << msg << std::endl;
 }
 
 void Logger::error(const std::string &msg)
 {
+    std::lock_guard<std::mutex> lock(coutMutex); // Acquire lock
+
     time_t now = time(nullptr);
     logFile << "[ERR ] " << std::ctime(&now) << "  " << msg << std::endl;
 }

@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "emoji.hpp"
 #include "config.hpp"
+#include "logger.hpp" // 確保 Logger 被包含
 
 namespace fs = std::filesystem;
 
@@ -21,7 +22,7 @@ void CLIParser::handle(int argc, char *argv[],
         if (std::string(argv[i]) == "--no-icons")
         {
             Emoji::enabled = false;
-            std::cout << "Emoji::Check() 已關閉圖示顯示\n";
+            Logger::info("Emoji::Check() 已關閉圖示顯示");
             break;
         }
     }
@@ -29,17 +30,18 @@ void CLIParser::handle(int argc, char *argv[],
     if (argc < 2)
     {
         std::cout << Emoji::Menu() << "使用方法：\n"
-                  << "  --backup                建立備份\n"
-                  << "  --restore               還原最新備份\n"
-                  << "  --list-backups          列出所有備份檔案\n"
-                  << "  --delete-backup <file>  刪除指定備份檔\n"
-                  << "  --add-note <content>    新增備註\n"
-                  << "  --list-notes            列出所有備註\n"
-                  << "  --update-note <id> <content> 更新備註\n"
-                  << "  --delete-note <id>      刪除指定備註\n"
-                  << "  --no-icons              不顯示圖示\n"
-                  << "  --help                  顯示此幫助訊息\n";
-
+                  << "  --backup                     建立備份\n"
+                  << "  --restore                    還原最新備份\n"
+                  << "  --list-backups               列出所有備份檔案\n"
+                  << "  --delete-backup <file>       刪除指定備份檔\n"
+                  // << "  --add-note <content>    新增備註\n" // 註解掉的功能
+                  // << "  --list-notes            列出所有備註\n" // 註解掉的功能
+                  // << "  --update-note <id> <content> 更新備註\n" // 註解掉的功能
+                  // << "  --delete-note <id>      刪除指定備註\n" // 註解掉的功能
+                  << "  --log                        顯示應用程式日誌 (來自設定檔中的 dbPath)\n"
+                  << "  --show-backup-log            顯示 backup_log.db 中的備份日誌\n"
+                  << "  --no-icons                   不顯示圖示\n"
+                  << "  --help                       顯示此幫助訊息\n";
         return;
     }
 
@@ -58,14 +60,15 @@ void CLIParser::handle(int argc, char *argv[],
     {
         if (!fs::exists(backupDir))
         {
-            std::cout << Emoji::Error() << "備份資料夾不存在\n";
+            Logger::error(Emoji::Error() + "備份資料夾不存在: " + backupDir);
             return;
         }
         for (const auto &entry : fs::directory_iterator(backupDir))
         {
             if (entry.path().extension() == ".db")
             {
-                std::cout << Emoji::File() << entry.path().filename() << std::endl;
+                // 列表通常輸出到 stdout 是可接受的
+                std::cout << Emoji::File() << entry.path().filename().string() << std::endl;
             }
         }
     }
@@ -73,18 +76,18 @@ void CLIParser::handle(int argc, char *argv[],
     {
         if (argc < 3)
         {
-            std::cerr << Emoji::Warning() << "請指定要刪除的備份檔名\n";
+            Logger::error(Emoji::Warning() + "請指定要刪除的備份檔名");
             return;
         }
         fs::path fileToDelete = fs::path(backupDir) / argv[2];
         if (fs::exists(fileToDelete))
         {
             fs::remove(fileToDelete);
-            std::cout << Emoji::Trash() << " 已刪除：" << fileToDelete.filename() << std::endl;
+            Logger::info(Emoji::Trash() + " 已刪除：" + fileToDelete.filename().string());
         }
         else
         {
-            std::cerr << Emoji::Error() << " 找不到檔案：" << fileToDelete << std::endl;
+            Logger::error(Emoji::Error() + " 找不到檔案：" + fileToDelete.string());
         }
     }
     /*     else if (command == "--add-note")
@@ -176,6 +179,6 @@ void CLIParser::handle(int argc, char *argv[],
 
     else
     {
-        std::cerr << Emoji::Question() << " 未知指令：" << command << "\n";
+        Logger::error(Emoji::Question() + " 未知指令：" + command);
     }
 }

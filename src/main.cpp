@@ -25,11 +25,13 @@ int main(int argc, char *argv[])
     std::shared_ptr<EventRecorder> recorder_ptr;
     try
     {
-        recorder_ptr = std::make_shared<EventRecorder>(*bus, "events_log.json");
+        // Construct EventRecorder first
+        recorder_ptr = std::make_shared<EventRecorder>("events_log.json");
+        recorder_ptr->subscribeToEvents(*bus); // Then, initialize its subscriptions
     }
     catch (const std::runtime_error &e)
     {
-        std::cerr << "初始化事件記錄器失敗：" << e.what() << std::endl;
+        Logger::error("初始化事件記錄器失敗：" + std::string(e.what())); // 或者直接 std::cerr 如果 Logger 未初始化
         return 1;
     }
 
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
         Logger::info("cloudsyncbackup 啟動");
     }
 
-    std::cout << Emoji::Rocket() << " cloudsyncbackup 啟動中...\n";
+    Logger::info(Emoji::Rocket() + " cloudsyncbackup 啟動中...");
 
     // 處理路徑
     fs::path dbPath = config.dbPath;

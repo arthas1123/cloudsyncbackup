@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "logger.hpp" // 確保 Logger 被包含
 
 namespace fs = std::filesystem;
 
@@ -10,7 +11,7 @@ bool Restore::restoreLatest(const std::string &backupDir, const std::string &dbP
 {
     if (!fs::exists(backupDir))
     {
-        std::cerr << "❌ 備份資料夾不存在：" << backupDir << std::endl;
+        Logger::error("❌ Restore::restoreLatest: 備份資料夾不存在：" + backupDir);
         return false;
     }
 
@@ -25,7 +26,7 @@ bool Restore::restoreLatest(const std::string &backupDir, const std::string &dbP
 
     if (backups.empty())
     {
-        std::cerr << "⚠️ 沒有可用的備份檔案\n";
+        Logger::info("⚠️ Restore::restoreLatest: 沒有可用的備份檔案");
         return false;
     }
 
@@ -60,12 +61,12 @@ bool Restore::restoreFromFile(const std::string &backupFilePath, const std::stri
     try
     {
         fs::copy_file(path, dbPath, fs::copy_options::overwrite_existing);
-        std::cout << "✅ 成功還原自指定檔案：" << backupFilePath << std::endl;
+        Logger::info("✅ 成功還原自指定檔案：" + backupFilePath); // 使用傳入的 backupFilePath
         return true;
     }
     catch (const fs::filesystem_error &e)
     {
-        std::cerr << "❌ 還原失敗：" << e.what() << std::endl;
+        Logger::error("❌ Restore::restoreFromFile: 還原失敗：" + std::string(e.what())); // 修正函數名稱
         return false;
     }
 }

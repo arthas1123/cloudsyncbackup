@@ -1,7 +1,7 @@
 #include "event_recorder.hpp"
 #include "event_bus.hpp"
 #include <nlohmann/json.hpp>
-#include <iostream>
+#include "logger.hpp" // For Logger::error
 
 using json = nlohmann::json;
 
@@ -9,7 +9,7 @@ EventRecorder::EventRecorder(const std::string &filename) : logFile_(filename)
 {
     if (!logFile_.is_open())
     {
-        std::cerr << "無法開啟事件記錄檔案: " << filename << std::endl;
+        Logger::error("無法開啟事件記錄檔案: " + filename);
         throw std::runtime_error("無法開啟事件記錄檔案: " + filename);
     }
 }

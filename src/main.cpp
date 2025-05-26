@@ -63,6 +63,10 @@ int main(int argc, char *argv[])
 
     // 使用 CLI 解析器處理命令
     CLIParser::handle(argc, argv, dbPath.string(), backupDir.string(), *bus);
+    Logger::info("Main: Initiating BackupWorker shutdown...");
+    BackupWorker::shutdown();
+    Logger::info("Main: BackupWorker shutdown complete.");
+    Logger::info("cloudsyncbackup exiting normally.");
 
     return 0;
 }

@@ -1,6 +1,5 @@
 #include "restore.hpp"
 #include <filesystem>
-#include <iostream>
 #include <vector>
 #include <algorithm>
 #include "logger.hpp" // 確保 Logger 被包含
@@ -39,12 +38,12 @@ bool Restore::restoreLatest(const std::string &backupDir, const std::string &dbP
     try
     {
         fs::copy_file(latestBackup.path(), dbPath, fs::copy_options::overwrite_existing);
-        std::cout << "✅ 成功還原自最新備份：" << latestBackup.path() << std::endl;
+        Logger::info("✅ 成功還原自最新備份：" + latestBackup.path().string());
         return true;
     }
     catch (const fs::filesystem_error &e)
     {
-        std::cerr << "❌ 還原失敗：" << e.what() << std::endl;
+        Logger::error("❌ Restore::restoreLatest: 還原失敗：" + std::string(e.what()));
         return false;
     }
 }
@@ -54,7 +53,7 @@ bool Restore::restoreFromFile(const std::string &backupFilePath, const std::stri
     fs::path path = backupFilePath;
     if (!fs::exists(path))
     {
-        std::cerr << "❌ 找不到指定備份檔案：" << backupFilePath << std::endl;
+        Logger::error("❌ Restore::restoreFromFile: 找不到指定備份檔案：" + backupFilePath);
         return false;
     }
 

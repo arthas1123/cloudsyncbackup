@@ -1,19 +1,18 @@
 #include "database.hpp"
 #include <sqlite3.h>
 #include <sstream>
-#include <iostream>
 #include "logger.hpp"
 
 Database::Database(const std::string &dbPath)
     : dbPath_(dbPath), db_(nullptr)
 {
-    if (sqlite3_open(dbPath_.c_str(), (sqlite3 **)&db_) == SQLITE_OK)
+    if (sqlite3_open(dbPath_.c_str(), reinterpret_cast<sqlite3 **>(&db_)) == SQLITE_OK)
     {
-        std::cout << "📦 開啟資料庫成功：" << dbPath_ << std::endl;
+        Logger::info("📦 開啟資料庫成功：" + dbPath_);
     }
     else
     {
-        std::cerr << "❌ 開啟資料庫失敗！\n";
+        Logger::error("❌ 開啟資料庫失敗：" + dbPath_ + " - " + sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_)));
     }
 }
 
@@ -21,8 +20,8 @@ Database::~Database()
 {
     if (db_)
     {
-        sqlite3_close((sqlite3 *)db_);
-        std::cout << "🧹 關閉資料庫\n";
+        sqlite3_close(reinterpret_cast<sqlite3 *>(db_));
+        Logger::info("🧹 關閉資料庫: " + dbPath_);
     }
 }
 
@@ -33,9 +32,9 @@ void Database::initialize()
     //                   "content TEXT NOT NULL);";
 
     // char *errMsg = nullptr;
-    // if (sqlite3_exec((sqlite3 *)db_, sql, nullptr, nullptr, &errMsg) != SQLITE_OK)
+    // if (sqlite3_exec(reinterpret_cast<sqlite3 *>(db_), sql, nullptr, nullptr, &errMsg) != SQLITE_OK)
     // {
-    //     std::cerr << "❌ 建立資料表失敗：" << errMsg << std::endl;
+    //     Logger::error(std::string("❌ 建立資料表失敗：") + errMsg);
     //     sqlite3_free(errMsg);
     // }
 
@@ -48,9 +47,9 @@ void Database::initialize()
                               "error_message TEXT);";
 
     char *logErr = nullptr;
-    if (sqlite3_exec((sqlite3 *)db_, logTableSql, nullptr, nullptr, &logErr) != SQLITE_OK)
+    if (sqlite3_exec(reinterpret_cast<sqlite3 *>(db_), logTableSql, nullptr, nullptr, &logErr) != SQLITE_OK)
     {
-        std::cerr << "❌ 建立 backup_log 資料表失敗：" << logErr << std::endl;
+        Logger::error(std::string("❌ 建立 backup_log 資料表失敗：") + (logErr ? logErr : "Unknown error"));
         sqlite3_free(logErr);
     }
     else
@@ -67,8 +66,9 @@ bool Database::logBackUp(const std::string &filePath,
 {
     std::string sql = "INSERT INTO backup_log (file_path, backup_path, backup_time, status, error_message) VALUES (?, ?, ?, ?, ?);";
     sqlite3_stmt *stmt = nullptr;
-    if (sqlite3_prepare_v2((sqlite3 *)db_, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    if (sqlite3_prepare_v2(reinterpret_cast<sqlite3 *>(db_), sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
     {
+        Logger::error("❌ logBackUp: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
         return false;
     }
     sqlite3_bind_text(stmt, 1, filePath.c_str(), -1, SQLITE_TRANSIENT);
@@ -77,6 +77,10 @@ bool Database::logBackUp(const std::string &filePath,
     sqlite3_bind_text(stmt, 4, status.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 5, errorMsg.c_str(), -1, SQLITE_TRANSIENT);
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    if (!success)
+    {
+        Logger::error("❌ logBackUp: 無法執行 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
+    }
     sqlite3_finalize(stmt);
     return success;
 }
@@ -85,8 +89,9 @@ bool Database::getBackUpLog(int id, BackupRecord &record)
 {
     std::string sql = "SELECT file_path, backup_path, backup_time, status, error_message FROM backup_log WHERE id = ?;";
     sqlite3_stmt *stmt = nullptr;
-    if (sqlite3_prepare_v2((sqlite3 *)db_, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    if (sqlite3_prepare_v2(reinterpret_cast<sqlite3 *>(db_), sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
     {
+        Logger::error("❌ getBackUpLog: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
         return false;
     }
     sqlite3_bind_int(stmt, 1, id);
@@ -107,8 +112,9 @@ int Database::getBackUpLogCount()
 {
     const char *sql = "SELECT COUNT(*) FROM backup_log;";
     sqlite3_stmt *stmt = nullptr;
-    if (sqlite3_prepare_v2((sqlite3 *)db_, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    if (sqlite3_prepare_v2(reinterpret_cast<sqlite3 *>(db_), sql, -1, &stmt, nullptr) != SQLITE_OK)
     {
+        Logger::error("❌ getBackUpLogCount: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
         return -1;
     }
     int count = 0;
@@ -124,13 +130,17 @@ bool Database::deleteBackLog(int id)
 {
     std::string sql = "DELETE FROM backup_log WHERE id = ?;";
     sqlite3_stmt *stmt = nullptr;
-    if (sqlite3_prepare_v2((sqlite3 *)db_, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+    if (sqlite3_prepare_v2(reinterpret_cast<sqlite3 *>(db_), sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
     {
-        std::cerr << "❌ 刪除筆記失敗：" << sqlite3_errmsg((sqlite3 *)db_) << std::endl;
+        Logger::error("❌ deleteBackLog: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
         return false;
     }
     sqlite3_bind_int(stmt, 1, id);
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
+    if (!success)
+    {
+        Logger::error("❌ deleteBackLog: 無法執行 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
+    }
     sqlite3_finalize(stmt);
     return success;
 }
@@ -142,9 +152,9 @@ void Database::getAllBackupLogs()
     const char *sql = "SELECT id, file_path, backup_path, backup_time, status, error_message FROM backup_log ORDER BY id DESC;";
     sqlite3_stmt *stmt = nullptr;
 
-    if (sqlite3_prepare_v2((sqlite3 *)db_, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    if (sqlite3_prepare_v2(reinterpret_cast<sqlite3 *>(db_), sql, -1, &stmt, nullptr) != SQLITE_OK)
     {
-        std::cerr << "❌ 無法查詢備份紀錄：" << sqlite3_errmsg((sqlite3 *)db_) << std::endl;
+        Logger::error("❌ getAllBackupLogs: 無法準備 SQL 語句：" + std::string(sqlite3_errmsg(reinterpret_cast<sqlite3 *>(db_))));
         return;
     }
 
